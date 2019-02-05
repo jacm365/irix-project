@@ -1,0 +1,15 @@
+{
+  "name": "irix-project",
+  "version": "1.0.0",
+  "description": "Awesome app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jaime Clavijo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "jade": "^1.11.0"
+  }
+}
