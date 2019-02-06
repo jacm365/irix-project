@@ -6,10 +6,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "4.8.x",
+    "npm": "2.15.x"
+  },
   "author": "Jaime Clavijo",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "debug": "^2.6.8",
     "express": "^4.16.4",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "mongoose": "^5.4.10",
+    "morgan": "^1.9.1",
+    "stylus": "^0.45.1"
+  },
+  "devDependencies": {
+    "bower": "^1.8.8"
   }
 }
