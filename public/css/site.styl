@@ -1,0 +1,98 @@
+/*
+* General
+*/
+html, body, .main-content
+    height 100%
+.bg-irx
+    background-color #277af3
+nav
+    .navbar-nav
+        margin-left 20px
+    .nav-link
+        color white
+    .dropdown
+        color transparent
+        margin-top -20px
+div.footer
+    position fixed
+    bottom 0
+    width 100%
+    text-align center     
+/*
+* Login
+*/
+.login
+    background-image url('/img/login-bg.jpg')
+    .row
+        background-color rgba(39, 122, 243, 0.3)
+    .login-wrap
+        text-align center
+        width max-content
+        margin auto
+        .logo
+            background-color #277af3
+            width 200px
+            text-align center
+            height 200px
+            border-radius 50%
+            display flex
+            flex-wrap wrap
+            align-items center
+            margin 2rem auto
+            img
+                margin auto
+        form
+            div
+                i
+                    margin-right 10px
+                    margin-left -20px
+                input
+                    display inline-block
+                    width auto
+            button
+                margin-top 1rem
+/*
+* Users
+*/
+.users-wrapper
+    display flex
+    width 100%
+    align-items stretch
+    .sidebar
+        min-width 12%
+        max-width 15%
+        min-height 92.9vh
+        background-color #f33a27
+        a.active
+            background-color: #16181b;
+            color #fff
+        a
+            color #fff
+            width 100%
+            display block
+            line-height 3rem
+            text-decoration none
+            &:hover
+                background-color: #16181b;
+                color #fff
+            i
+                width 37px
+                height 18px
+                margin 0 auto
+                text-align center
+    .page-content-wrap
+        width: 100%
+        padding 2%;
+        h1
+            display inline-block
+        button.add
+            float right
+            margin-top 10px
+            i
+                margin-right 7px
+        .grid
+            .jsgrid-grid-header
+                overflow-y auto
+            .jsgrid-grid-body
+                overflow-y auto
+    

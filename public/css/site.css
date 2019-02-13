@@ -1,0 +1,121 @@
+/*
+* General
+*/
+html,
+body,
+.main-content {
+  height: 100%;
+}
+.bg-irx {
+  background-color: #277af3;
+}
+nav .navbar-nav {
+  margin-left: 20px;
+}
+nav .nav-link {
+  color: #fff;
+}
+nav .dropdown {
+  color: transparent;
+  margin-top: -20px;
+}
+div.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+/*
+* Login
+*/
+.login {
+  background-image: url("/img/login-bg.jpg");
+}
+.login .row {
+  background-color: rgba(39,122,243,0.3);
+}
+.login .login-wrap {
+  text-align: center;
+  width: max-content;
+  margin: auto;
+}
+.login .login-wrap .logo {
+  background-color: #277af3;
+  width: 200px;
+  text-align: center;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 2rem auto;
+}
+.login .login-wrap .logo img {
+  margin: auto;
+}
+.login .login-wrap form div i {
+  margin-right: 10px;
+  margin-left: -20px;
+}
+.login .login-wrap form div input {
+  display: inline-block;
+  width: auto;
+}
+.login .login-wrap form button {
+  margin-top: 1rem;
+}
+/*
+* Users
+*/
+.users-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+.users-wrapper .sidebar {
+  min-width: 12%;
+  max-width: 15%;
+  min-height: 92.9vh;
+  background-color: #f33a27;
+}
+.users-wrapper .sidebar a.active {
+  background-color: #16181b;
+  color: #fff;
+}
+.users-wrapper .sidebar a {
+  color: #fff;
+  width: 100%;
+  display: block;
+  line-height: 3rem;
+  text-decoration: none;
+}
+.users-wrapper .sidebar a:hover {
+  background-color: #16181b;
+  color: #fff;
+}
+.users-wrapper .sidebar a i {
+  width: 37px;
+  height: 18px;
+  margin: 0 auto;
+  text-align: center;
+}
+.users-wrapper .page-content-wrap {
+  width: 100%;
+  padding: 2%;
+}
+.users-wrapper .page-content-wrap h1 {
+  display: inline-block;
+}
+.users-wrapper .page-content-wrap button.add {
+  float: right;
+  margin-top: 10px;
+}
+.users-wrapper .page-content-wrap button.add i {
+  margin-right: 7px;
+}
+.users-wrapper .page-content-wrap .grid .jsgrid-grid-header {
+  overflow-y: auto;
+}
+.users-wrapper .page-content-wrap .grid .jsgrid-grid-body {
+  overflow-y: auto;
+}

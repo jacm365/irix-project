@@ -1,0 +1,14 @@
+div.container-fluid.login.h-100
+	div.row.h-100
+		div.col.my-auto
+			div.login-wrap(ng-controller="ipLoginCtrl")
+				div.logo
+					img(src='/img/logo-irix.svg')
+				form
+					div.form-group
+						i.fas.fa-user
+						input.form-control(type='text', name='user', placeholder='User', ng-model="user")
+					div.form-gruop
+						i.fas.fa-key
+						input.form-control(type='password', name='user', placeholder='Password', ng-model="password")
+					button.btn.btn-primary(type='submit' ng-click="signin(user, password)") Login

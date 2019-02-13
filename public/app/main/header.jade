@@ -1,0 +1,15 @@
+header
+    nav.navbar.navbar-expand-lg.bg-irx
+        a.navbar-brand(href="/")
+            img.logo(src='/img/logo-irix.svg')
+        button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarText", aria-controls="navbarText", aria-expanded="false", aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+        div.collapse.navbar-collapse(id="navbarText")
+            ul.navbar-nav.mr-auto
+                li.nav-item.active
+                    a.nav-link(href="/users") Users Management
+            li.nav-item.dropdown
+                a.nav-link.dropdown-toggle(href="#",id="navbarDropdownMenuLink",data-toggle="dropdown",aria-haspopup="true",aria-expanded="false", ng-show="identity.isAuthenticated()") {{user.name}}
+                div.dropdown-menu(aria-labelledby="navbarDropdownMenuLink")
+                    a.dropdown-item(href='#') Profile
+                    a.dropdown-item(href='#', ng-click="signout()") Sign out

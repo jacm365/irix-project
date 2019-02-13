@@ -1,51 +1,33 @@
 var express = require('express'), 
-	stylus = require('stylus'),
-	logger = require('morgan'),
-	bodyParser = require('body-parser'),
-	mongoose = require('mongoose');
+	sequelize = require('sequelize'),
+	passport = require('passport'),
+	glob = require( 'glob' ),
+	path = require( 'path' ),
+	localStrategy = require('passport-local').Strategy;
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var app = express();
 
-function compile(str, path) {
-	return stylus(str).set('filename', path);
-}
+var config = require('./server/config/config')[env];
 
-app.set('views', __dirname + '/server/views');
-app.set('view engine', 'jade');
-app.use(logger('dev'));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(stylus.middleware({
-	src: __dirname + '/public',
-	compile: compile
-}));
-app.use(express.static(__dirname + '/public'));
+var connection = require('./server/config/sequelize')(models, config, sequelize);
 
-mongoose.connect('mongodb://localhost:27017/irix', { useNewUrlParser: true });
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error...'));
-db.once('open', function callback() {
-	console.log('Irix db opened')
-});
-var messageSchema = mongoose.Schema({message: String});
-var Message = mongoose.model('messages', messageSchema);
-var mongoMessage;
-Message.findOne().exec(function(err, messageDoc) {
-	mongoMessage = messageDoc.message
+var models = {};
+
+glob.sync( './server/config/database-models/*.js' ).forEach( function(file) {
+	var model = path.basename(file, '.js');
+	models[model] = require(path.resolve(file))(sequelize, connection);
 });
 
-app.get('/partials/:partialPath', function(req, res)  {
-	res.render('partials/' + req.params.partialPath);
-});
-app.get('*', function(req, res) {
-	res.render('index', {
-		mongoMessage: mongoMessage
-	});
-});
+require('./server/config/model-relations')(models);
 
-var port = process.env.PORT || 3030;
-app.listen(port);
+require('./server/config/express')(app, config, passport);
 
-console.log('Listening on port ' + port + '...');
+require('./server/config/passport')(models, passport, localStrategy);
+
+require('./server/config/routes')(app, models);
+
+app.listen(config.port);
+
+console.log('Listening on port ' + config.port + '...');

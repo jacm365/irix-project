@@ -1,0 +1,10 @@
+div(ng-include="'/partials/main/header'")
+div.users-wrapper
+	div.sidebar(ng-include="'/partials/users/sideMenu'")
+	div.page-content-wrap
+		h1 Users
+		button.btn.btn-success.add
+			i.fas.fa-plus 
+			| Add User
+		div.grid(id="user-grid")
+		div.footer(ng-include="'/partials/main/footer'")
