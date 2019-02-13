@@ -4,7 +4,14 @@ module.exports = function(models, passport, localStrategy) {
 	passport.use(new localStrategy(
 		{ usernameField: 'user'	},
 		function(user, password, done) {
-			models.User.findOne({ 
+			models.User.findOne({
+				include: [{
+				    model: models.Role,
+				    attributes: [['code', 'role']],
+				    through:{
+					    attributes: [] //Omits the linking table records
+					}
+				}],
 				where: {
 					active: true,
 					$or: [
@@ -29,7 +36,16 @@ module.exports = function(models, passport, localStrategy) {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		models.User.findById(id).then(function(user) {
+		models.User.findOne({
+			include: [{
+			    model: models.Role,
+			    attributes: [['code', 'role']],
+			    through:{
+				    attributes: [] //Omits the linking table records
+				}
+			}],
+			where: {id: id}
+		}).then(function(user) {
 			if (!user) { done(null, false); }
 			return done(null, user);
 		}).catch(function(err) {

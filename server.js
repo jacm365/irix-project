@@ -20,7 +20,7 @@ glob.sync( './server/config/database-models/*.js' ).forEach( function(file) {
 	models[model] = require(path.resolve(file))(sequelize, connection);
 });
 
-require('./server/config/model-relations')(models);
+models = require('./server/config/model-relations')(connection, sequelize, models);
 
 require('./server/config/express')(app, config, passport);
 

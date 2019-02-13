@@ -1,4 +1,4 @@
-angular.module('app').factory('ipAuth', function($http, ipIdentity, $q) {
+angular.module('app').factory('ipAuth', function($http, $window, ipIdentity, $q) {
 	return {
 		authenticateUser: function(user, password) {
 			var dfd = $q.defer();
@@ -16,6 +16,7 @@ angular.module('app').factory('ipAuth', function($http, ipIdentity, $q) {
 		logoutUser: function() {
 			var dfd = $q.defer();
 			$http.post('/logout', {logout:true}).then(function() {
+				$window.bootstrappedUserObject = undefined;
 				ipIdentity.currentUser = undefined;
 				dfd.resolve();
 			});

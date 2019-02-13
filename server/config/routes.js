@@ -1,4 +1,5 @@
 var auth = require('./auth');
+var helpers = require('./helpers');
 
 module.exports = function(app, models) {
 	app.get('/api/users/:companyId?', auth.requiresApiLogin, function(req, res) {
@@ -37,12 +38,8 @@ module.exports = function(app, models) {
 
 	app.get('*', function(req, res) {
 		var userData;
-		if(!(req.user==null)) {
-			userData = {
-				id: req.user.id,
-				name: req.user.firstname + " " + req.user.lastname,
-				companyId: req.user.companyId
-			}
+		if(!(req.user == null)) {
+			userData = helpers.frontendUserData(req.user);
 		}
 		res.render('index', {
 			bootstrappedUser: userData

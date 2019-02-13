@@ -1,4 +1,5 @@
 var passport = require('passport');
+var helpers = require('./helpers');
 
 exports.authenticate = function(req, res, next) {
 	var auth = passport.authenticate('local', function(err, user) {
@@ -6,12 +7,7 @@ exports.authenticate = function(req, res, next) {
 		if(!user) { res.send({success: false}); }
 		req.logIn(user, function(err) {
 			if(err) { return next(err) }
-			var userData = {
-				id: req.user.id,
-				name: req.user.firstname + " " + req.user.lastname,
-				companyId: req.user.companyId
-			}
-			res.send({success:true, user: userData})
+			res.send({success:true, user: helpers.frontendUserData(req.user)})
 		});
 	});
 	auth(req, res, next);
