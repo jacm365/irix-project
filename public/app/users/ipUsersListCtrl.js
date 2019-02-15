@@ -1,45 +1,69 @@
-angular.module('app').controller('ipUsersListCtrl', function($scope) {
-	
-	var clients = [
-        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
-        { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
-        { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
-        { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
-        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
-    ];
- 
-    var countries = [
-        { Name: "", Id: 0 },
-        { Name: "United States", Id: 1 },
-        { Name: "Canada", Id: 2 },
-        { Name: "United Kingdom", Id: 3 }
-    ];
+angular.module('app').controller('ipUsersListCtrl', function($scope, ipIdentity, ipUsersCrud, ipNotifier, $location, $rootScope) {
+	$scope.identity = ipIdentity;
+	$scope.user = ipIdentity.currentUser;
+	var formatedUsers;
+	ipUsersCrud.get({role: 'ALL'}).$promise.then(function(users) {
+		formatedUsers = [];
+		users.forEach(function(user){
+			formatedUsers.push({
+				"id": user.id,
+				"Name": user.firstname + ' ' + ((user.lastname)?user.lastname:''),
+				"Email": user.email,
+				"Role": user.Roles[0].role
+			});
+		
+		});
 
+		$scope.initSlider();
+	});
+	
 	$scope.initSlider = function () {
 		$(function () {
 		// wait till load event fires so all resources are available
 		  $("#user-grid").jsGrid({
 		        width: "100%",
-		        height: "400px",
+		        height: "415px",
 		 
 		        inserting: false,
+		        filtering: false,
 		        editing: true,
 		        sorting: true,
 		        paging: true,
+
+		        deleteConfirm: "Do you really want to delete the user?",
+		        pageSize: 8,
+        		pageButtonCount: 5,
 		 
-		        data: clients,
+		        data: formatedUsers,
 		 
 		        fields: [
-		            { name: "Name", type: "text", width: 150, validate: "required" },
-		            { name: "Age", type: "number", width: 50 },
-		            { name: "Address", type: "text", width: 200 },
-		            { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
-		            { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
-		            { type: "control" }
-		        ]
+		            { name: "Name", type: "text", width: "25%"},
+		            { name: "Email", type: "text", width: "25%"},
+		            { name: "Role", type: "text", width: "25%"},
+		            { type: "control"}
+		        ],
+		        onItemDeleting: function(args) {
+			        // cancel deletion of the item with 'protected' fields
+			        args.cancel = true;
+			        ipUsersCrud.delete(args.item.id).$promise.then(
+			        	function(response) {
+				        	args.row.remove();
+				        	ipNotifier.success('User successfully deleted');
+			        	},
+			        	function(response) {
+				        	ipNotifier.error('Error deleting user');
+			        	}
+			        );
+			    },
+			    onItemEditing: function(args) {
+			        // cancel editing of the row of item with field 'ID' = 0
+			        $location.path('/users/edit/'+args.item.id);
+			        $rootScope.$apply()
+			        args.cancel = true;
+			    }
 		    });
 		});
 	};
 
-    $scope.initSlider();
+    
 });

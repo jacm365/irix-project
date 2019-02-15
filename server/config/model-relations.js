@@ -25,6 +25,7 @@ module.exports = function(connection, sequelize, models) {
 
 	models.User.belongsToMany(models.Role, { through: models.UserRoles, foreignKey: 'userId' })
 	models.Role.belongsToMany(models.User, { through: models.UserRoles, foreignKey: 'roleId' })
-
+	models.User.hasMany(models.UserRoles, { foreignKey: 'userId', onDelete: 'cascade' })
+	
 	return models;
 }

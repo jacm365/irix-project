@@ -1,0 +1,65 @@
+div(ng-include="'/partials/main/header'")
+div.users-wrapper
+	div.sidebar(ng-include="'/partials/users/sideMenu'")
+	div.page-content-wrap
+		h1 {{(!userId)?'Create':'Update'}} User{{(!name)?'':': ' + name}}
+		
+		div.update-form
+			form(name="userForm")
+				div.form-row
+					div.form-group.col-md-6
+						label(for="firstname") First Name 
+						span.mandatory &nbsp;*
+						input.form-control(type='text', name='firstname', placeholder='First Name', ng-model="firstname", required)
+					div.form-group.col-md-6
+						label(for="lastname") Last Name
+						input.form-control(type='text', name='lastname', placeholder='Last Name', ng-model="lastname")
+				div.form-row
+					div.form-group.col-md-6
+						label(for="email") Email 
+						span.mandatory &nbsp;*
+						input.form-control(type='email', name='email', placeholder='Email', ng-model="email", required)
+					div.form-group.col-md-6
+						label(for="username") Username
+						input.form-control(type='text', name='username', placeholder='Username', ng-model="username")
+				div.form-row
+					div.form-group.col-md-6
+						label(for="password") Password
+						span.mandatory &nbsp;*
+						input(type="hidden", ng-model="requiredPass")
+						input.form-control(type='password', name='password', placeholder='Password', ng-model="password", ng-required="requiredPass")
+					div.form-group.col-md-6
+						label(for="confirmPassword") Confirm Password
+						span.mandatory &nbsp;*
+						input.form-control(type='password', name='confirmPassword', placeholder='Confirm Password', ng-model="confirmPassword",  compare-to="password")
+				div.form-row
+					div.form-group.col
+						label(for="role") Role
+						span.mandatory &nbsp;*
+						select.form-control(name="role", ng-model="role", required)
+							option(value="1", ng-show="identity.isAdmin()") Admin
+							option(value="2", ng-show="identity.isAdmin()") Company
+							option(value="3") Trainer
+							option(value="4") Trainee
+					div.form-group.col
+						label(for="username") Age
+						input.form-control(type='number', name='age', placeholder='Age', ng-model="age", ng-min="1", ng-max="99")
+					div.form-group.col
+						label(for="username") Gender
+						select.form-control(name="gender", ng-model="gender")
+							option(value="M") Male
+							option(value="F") Female
+							option(value="O") Other
+					div.form-group.col(ng-show="role==3 || role==4")
+						label(for="company") Company
+						span.mandatory &nbsp;*
+						select.form-control(name="company", ng-model="company")
+							option(ng-repeat="company in companies", value="{{company.id}}"){{company.firstname}}</option>
+				div.form-group
+						div.form-check
+							input.form-check-input(type='checkbox', ng-checked="active" name='active', ng-model="active")
+							label.form-check-label(for="active") Active
+				div.form-group.buttons
+					a.btn.btn-danger(href='/users') Cancel
+					&nbsp;
+					button.btn.btn-primary(type='submit', ng-click="save(userForm)", ng-disabled="userForm.$invalid") Save

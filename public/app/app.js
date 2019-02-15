@@ -1,9 +1,8 @@
 angular.module('app', ['ngResource', 'ngRoute']);
 
 angular.module('app').config(function($routeProvider, $locationProvider) {
-
 	var routeRoleChecks = {
-		any: {//Just checks if is a user with a session
+		user: { //Just checks if is a user with a session
 			auth: function(ipIdentity, $q) {
 				if(ipIdentity.isAuthenticated()) {
 					return true;
@@ -12,7 +11,7 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
 				}
 			}
 		},
-		admin: {//Companies route should be only available for Admins
+		admin: { //Companies route should be only available for Admins
 			auth: function(ipIdentity, $q) {
 				if(ipIdentity.isAdmin()) {
 					return true;
@@ -22,8 +21,8 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
 			}
 		},
 		adminOrCompany: {
-			auth: function(ipIdentity, $q) {//Users route can be accessed by both
-				if(ipIdentity.isAdmin() || ipIdentity.isAdmin()) {
+			auth: function(ipIdentity, $q) { //Users route can be accessed by both
+				if(ipIdentity.isAdmin() || ipIdentity.isCompany()) {
 					return true;
 				} else {
 					return $q.reject('not admin or company')
@@ -35,8 +34,9 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 	$routeProvider
 		.when('/login', {templateUrl: '/partials/account/login'})
-		.when('/', {templateUrl: '/partials/main/main', controller: 'ipMainCtrl', resolve: routeRoleChecks.any})
-		.when('/users', {templateUrl: '/partials/users/usersList', controller: 'ipUsersListCtrl'})
+		.when('/', {templateUrl: '/partials/main/main', controller: 'ipMainCtrl', resolve: routeRoleChecks.user})
+		.when('/users', {templateUrl: '/partials/users/usersList', controller: 'ipUsersListCtrl', resolve: routeRoleChecks.adminOrCompany})
+		.when('/users/edit/:userId?', {templateUrl: '/partials/users/usersForm', controller: 'ipUsersFormCtrl', resolve: routeRoleChecks.adminOrCompany})
 });
 
 angular.module('app').run(function($rootScope, $location) {

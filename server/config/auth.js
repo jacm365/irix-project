@@ -21,3 +21,17 @@ exports.requiresApiLogin = function(req, res, next) {
 		next();
 	}
 };
+
+exports.isAdmin = function(userData) {
+	var isAdmin = userData.Roles.find(function(element) {
+		return element.role == 'ADMIN';
+	});
+	return (!(isAdmin==null));
+}
+
+exports.isCompany = function(userData) {
+	var isCompany = userData.Roles.find(function(element) {
+		return element.role == 'CMPNY';
+	});
+	return (!(isCompany==null));
+}

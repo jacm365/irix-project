@@ -11,7 +11,7 @@ var app = express();
 
 var config = require('./server/config/config')[env];
 
-var connection = require('./server/config/sequelize')(models, config, sequelize);
+var connection = require('./server/config/sequelize')(config, sequelize);
 
 var models = {};
 

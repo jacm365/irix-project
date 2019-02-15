@@ -1,4 +1,4 @@
-header
+header(ng-controller="ipHeaderCtrl")
     nav.navbar.navbar-expand-lg.bg-irx
         a.navbar-brand(href="/")
             img.logo(src='/img/logo-irix.svg')
@@ -7,7 +7,7 @@ header
         div.collapse.navbar-collapse(id="navbarText")
             ul.navbar-nav.mr-auto
                 li.nav-item.active
-                    a.nav-link(href="/users") Users Management
+                    a.nav-link(href="/users", ng-show="identity.isAdmin()||identity.isCompany()") Users Management
             li.nav-item.dropdown
                 a.nav-link.dropdown-toggle(href="#",id="navbarDropdownMenuLink",data-toggle="dropdown",aria-haspopup="true",aria-expanded="false", ng-show="identity.isAuthenticated()") {{user.name}}
                 div.dropdown-menu(aria-labelledby="navbarDropdownMenuLink")

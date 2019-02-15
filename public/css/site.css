@@ -25,6 +25,18 @@ div.footer {
   width: 100%;
   text-align: center;
 }
+.toast {
+  top: 70px;
+}
+/*
+* Bootstrap Overrides
+*/
+.btn-danger {
+  background-color: #f33a27;
+}
+.btn-primary {
+  background-color: #277af3;
+}
 /*
 * Login
 */
@@ -73,8 +85,7 @@ div.footer {
   align-items: stretch;
 }
 .users-wrapper .sidebar {
-  min-width: 12%;
-  max-width: 15%;
+  min-width: 16%;
   min-height: 92.9vh;
   background-color: #f33a27;
 }
@@ -88,6 +99,9 @@ div.footer {
   display: block;
   line-height: 3rem;
   text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .users-wrapper .sidebar a:hover {
   background-color: #16181b;
@@ -106,11 +120,12 @@ div.footer {
 .users-wrapper .page-content-wrap h1 {
   display: inline-block;
 }
-.users-wrapper .page-content-wrap button.add {
+.users-wrapper .page-content-wrap a.add {
   float: right;
   margin-top: 10px;
+  color: #fff;
 }
-.users-wrapper .page-content-wrap button.add i {
+.users-wrapper .page-content-wrap a.add i {
   margin-right: 7px;
 }
 .users-wrapper .page-content-wrap .grid .jsgrid-grid-header {
@@ -118,4 +133,17 @@ div.footer {
 }
 .users-wrapper .page-content-wrap .grid .jsgrid-grid-body {
   overflow-y: auto;
+}
+.users-wrapper .update-form {
+  margin-top: 3rem;
+}
+.users-wrapper .update-form span.mandatory {
+  color: #f33a26;
+  display: inline-block;
+}
+.users-wrapper .update-form input.ng-invalid.ng-dirty {
+  border: 1px solid #f33a27;
+}
+.users-wrapper .update-form .form-group.buttons {
+  float: right;
 }

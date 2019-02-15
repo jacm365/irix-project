@@ -1,4 +1,4 @@
-angular.module('app').factory('ipIdentity', function($window) {
+angular.module('app').factory('ipIdentity', function($window, ipRoleCodes) {
 	var currentUser;
 	if(!($window.bootstrappedUserObject == null)) {
 		currentUser = $window.bootstrappedUserObject;
@@ -9,15 +9,17 @@ angular.module('app').factory('ipIdentity', function($window) {
 			return !(this.currentUser == null);
 		},
 		isAdmin: function() {
+			if(!this.isAuthenticated()) return false;
 			var isAdmin = this.currentUser.roles.find(function(element) {
-			  return element.role == "ADMIN";
+			  return element.role == ipRoleCodes.ADMIN;
 			});
 			
 			return (!(isAdmin==null));
 		},
 		isCompany: function() {
+			if(!this.isAuthenticated()) return false;
 			var isCompany = this.currentUser.roles.find(function(element) {
-			  return element.role == "CMPNY";
+			  return element.role == ipRoleCodes.CMPNY;
 			});
 			
 			return (!(isCompany==null));

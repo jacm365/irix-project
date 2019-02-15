@@ -17,7 +17,16 @@ div.footer
     position fixed
     bottom 0
     width 100%
-    text-align center     
+    text-align center
+.toast
+    top: 70px;
+/*
+* Bootstrap Overrides
+*/    
+.btn-danger
+    background-color #f33a27
+.btn-primary
+    background-color #277af3
 /*
 * Login
 */
@@ -59,8 +68,7 @@ div.footer
     width 100%
     align-items stretch
     .sidebar
-        min-width 12%
-        max-width 15%
+        min-width 16%
         min-height 92.9vh
         background-color #f33a27
         a.active
@@ -72,6 +80,9 @@ div.footer
             display block
             line-height 3rem
             text-decoration none
+            overflow hidden 
+            text-overflow ellipsis
+            white-space nowrap
             &:hover
                 background-color: #16181b;
                 color #fff
@@ -85,9 +96,10 @@ div.footer
         padding 2%;
         h1
             display inline-block
-        button.add
+        a.add
             float right
             margin-top 10px
+            color #fff
             i
                 margin-right 7px
         .grid
@@ -95,4 +107,13 @@ div.footer
                 overflow-y auto
             .jsgrid-grid-body
                 overflow-y auto
+    .update-form
+        margin-top 3rem
+        span.mandatory
+            color: #f33a26;
+            display: inline-block;
+        input.ng-invalid.ng-dirty
+            border 1px solid #f33a27
+        .form-group.buttons
+            float right
     

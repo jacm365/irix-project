@@ -1,4 +1,4 @@
-
+var helpers = require('./../helpers');
 
 module.exports = function (sequelize, connection) {
 	var User = connection.define('Users', {
@@ -18,7 +18,7 @@ module.exports = function (sequelize, connection) {
 	    },
 	    username: {
 	    	type: sequelize.STRING,
-	    	allowNull: false,
+	    	allowNull: true,
 	    	unique: true
 	    },
 	    hashedPassword: {
@@ -27,7 +27,7 @@ module.exports = function (sequelize, connection) {
 	    },
 	    email: {
 	    	type: sequelize.STRING,
-	    	allowNull: true,
+	    	allowNull: false,
 	    	unique: true
 	    },
 	    companyId: {
@@ -52,7 +52,7 @@ module.exports = function (sequelize, connection) {
 	    }
 	});
 	User.authenticate = function(password, hashedPassword, salt) {
-		return connection.hashPassword(salt, password) === hashedPassword;
+		return helpers.hashPassword(salt, password) === hashedPassword;
 	}
 
 	return User;

@@ -1,29 +1,78 @@
 var auth = require('./auth');
 var helpers = require('./helpers');
+var usersService = require('./services/users');
 
 module.exports = function(app, models) {
-	app.get('/api/users/:companyId?', auth.requiresApiLogin, function(req, res) {
+	
+	/*
+	* Users
+	*/
+	app.get('/api/users/:id?', auth.requiresApiLogin, function(req, res) {
+		console.log('******************GET REQUEST');
 		
-		var companyId = (req.params.companyId) ? req.params.companyId : null;
-		/*
-		* Only admin users don't send a companyId 
-		* they have access to the entire collection of users
-		*/
-		if(companyId==null) {
-			models.User.findAll().then(function(userData) {
+		if(req.params.id) { //Single User
+			usersService.getUser(req.params.id, models)
+			.then(function(userData){
+				console.log('route user data ' + userData)
 				res.send(userData);
+			})
+			.catch(function(error) {
+				res.status(403).send(error);
+				res.end();
 			});
-		} else {
-			models.User.findAll({
-				where: {
-					companyId: companyId
-				}
-			}).then(function(userData) {
+		} else { //User List
+			usersService.get(req, models)
+			.then(function(userData){
+				console.log('route user data ' + userData)
 				res.send(userData);
+			})
+			.catch(function(error) {
+				res.status(403).send(error);
+				res.end();
 			});
 		}
 		
+		
 	});
+	app.post('/api/users/:id?', auth.requiresApiLogin, function(req, res) {
+
+		if (req.params.id) { //Update
+			usersService.update(req, models)
+			.then(function(userid){
+				res.send({success: true, userId: userid});
+			})
+			.catch(function(error) {
+				res.status(403).send(error);
+				res.end();
+			});
+		} else { //Create
+			usersService.create(req, models)
+			.then(function(userid){
+				res.send({success: true, userId: userid});
+			})
+			.catch(function(error) {
+				res.status(403).send(error);
+				res.end();
+			});
+		}
+	});
+	app.delete('/api/users/:id', auth.requiresApiLogin, function(req, res) {
+		console.log('DELETE-------------')
+		usersService.delete(req.params.id, models)
+		.then(function(userid){
+			res.send({success: true});
+		})
+		.catch(function(error) {
+			res.status(403).send(error);
+			res.end();
+		});
+	});
+	/*
+	* Groups
+	*/
+	/*
+	* Departments
+	*/
 
 	app.get('/partials/*', function(req, res)  {
 		res.render('../../public/app/' + req.params[0]);
